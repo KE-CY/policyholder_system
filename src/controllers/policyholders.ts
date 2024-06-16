@@ -18,6 +18,16 @@ class PolicyholderController {
     return res.status(200).json(response);
   }
 
+  async getTop(req: Request, res: Response, next: NextFunction) {
+    const querySchema = Joi.object({
+      code: Joi.string().required(),
+    }).options({ stripUnknown: true });
+    console.log('---------------this');
+    const { code } = await querySchema.validateAsync(req.params);
+    const response = await this.service.getTop(code);
+    return res.status(200).json(response);
+  }
+
 }
 
 

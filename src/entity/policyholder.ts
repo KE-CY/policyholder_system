@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, JoinTable, Column, OneToMany, CreateDateColumn, UpdateDateColumn, OneToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, JoinColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, OneToOne } from 'typeorm';
 
 @Entity()
 export class Policyholder {
@@ -14,14 +14,17 @@ export class Policyholder {
   @CreateDateColumn()
   joinedAt!: Date;
 
+  @ManyToOne(() => Policyholder, policyholder => policyholder.code)
+  @JoinColumn({ name: "introducerCode" })
+  introducerCode?: Policyholder;
+
   @OneToOne(() => Policyholder, policyholder => policyholder.code)
-  introducerCode!: string;
+  @JoinColumn({ name: "lCode" })
+  lCode?: Policyholder;
 
-  @OneToMany(() => Policyholder, policyholder => policyholder.code)
-  lCode!: Policyholder[];
-
-  @OneToMany(() => Policyholder, policyholder => policyholder.code)
-  rCode!: Policyholder[];
+  @OneToOne(() => Policyholder, policyholder => policyholder.code)
+  @JoinColumn({ name: "rCode" })
+  rCode?: Policyholder;
 
   @Column({ default: false })
   isIndirect!: boolean

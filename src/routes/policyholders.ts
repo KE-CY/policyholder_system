@@ -15,8 +15,8 @@ export default class PolicyholderRoute extends BasicRoutes {
       new PolicyholderService(),
     );
 
+    this.router.get('/:code/top', controller.getTop.bind(controller));
     this.router.get('/:code', controller.getOne.bind(controller));
-
   }
 
 }
